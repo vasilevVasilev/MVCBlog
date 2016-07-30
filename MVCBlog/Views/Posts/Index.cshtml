@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MVCBlog.Models.Post>
+
+@using MVCBlog.Utils
+
+@{
+    ViewBag.Title = "Статии";
+}
+
+<p></p>
+<p>
+    @Html.ActionLink("Създай статия", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Заглавие
+        </th>
+        <th>
+            Съдържание
+        </th>
+        <th>
+            Дата
+        </th>
+        <th>
+            Автор
+        </th>
+        <th>
+            Действия
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Utils.CutText(item.Body, 200)
+        </td>
+        <td>
+            @item.Date.ToLongDateString()
+        </td>        
+        <td>
+            @if (item.Author != null)
+            {
+                <i>@item.Author.FullName (@item.Author.UserName)</i>
+            }
+        </td>
+        <td>
+            @if (User.IsInRole("Administrators"))
+            {
+                @Html.ActionLink("Редактирай", "Edit", new { id = item.Id }) @:|
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id }) @:|
+                @Html.ActionLink("Изтрий", "Delete", new { id = item.Id })
+            }
+            else if (User.Identity.Name.Equals(item.Author.Email))
+            {
+                @Html.ActionLink("Редактирай", "Edit", new { id = item.Id }) @:|
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id })
+            }
+            else
+            {
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>

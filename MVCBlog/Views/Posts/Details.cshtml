@@ -1,0 +1,42 @@
+﻿@model MVCBlog.Models.Post
+
+@{
+    ViewBag.Title = "Детайли";
+}
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Заглавие
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Съдържание
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+
+        <dt>
+            Дата
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<p>    
+    @if (User.Identity.Name.Equals(Model.Author.Email) || User.IsInRole("Administrators"))
+    {
+        @Html.ActionLink("Редактирай", "Edit", new { id = Model.Id }) @:|        
+    }
+    @Html.ActionLink("Обратно към статиите", "Index")
+</p>

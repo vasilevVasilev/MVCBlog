@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Началото";
+}
+
+
+@model List<MVCBlog.Models.Post>
+
+@foreach (var post in Model)
+{
+    <div class="post col-md-4">
+        <h2><a href="/Posts/Details/@post.Id">@post.Title</a></h2>
+        <div>
+            Публикувано на <i>@post.Date</i>
+            @if (post.Author != null)
+            {
+                @:от <i>@post.Author.FullName (@post.Author.UserName)</i>
+            }
+        </div>
+        <p>@Html.Raw(post.Body)</p>
+    </div>    
+}
