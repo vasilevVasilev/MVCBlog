@@ -16,11 +16,11 @@ namespace MVCBlog.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Трябва заглавие")]
         [StringLength(200)]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Искам съдържание")]
         public string Body { get; set; }
 
         [Required]

@@ -6,7 +6,7 @@ namespace MVCBlog.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна поща")]
         public string Email { get; set; }
     }
 
@@ -42,42 +42,42 @@ namespace MVCBlog.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна поща")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Required(ErrorMessage = "Въведи електронна поща")]
+        [Display(Name = "Електронна поща")]
+        [EmailAddress(ErrorMessage = "Виж кво си написал")]        
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Въведи парола")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомни ме")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Въведи електронна поща")]
+        [EmailAddress(ErrorMessage = "Виж кво си написал")]
+        [Display(Name = "Електронна поща")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Required(ErrorMessage = "Въведи парола")]
+        [StringLength(100, ErrorMessage = "Въведи поне {2} символа.", MinimumLength = 1)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Паролата отново")]
+        [Compare("Password", ErrorMessage = "Паролите не пасват.")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Пълно име")]
@@ -88,18 +88,18 @@ namespace MVCBlog.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна поща")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Въведи поне {2} символа.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Паролата отново")]
+        [Compare("Password", ErrorMessage = "Паролите не пасват.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -109,7 +109,7 @@ namespace MVCBlog.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Електронна поща")]
         public string Email { get; set; }
     }
 }

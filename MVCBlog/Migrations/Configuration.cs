@@ -26,6 +26,7 @@ namespace MVCBlog.Migrations
                 CreateUser(context, "pesho@gmail.com", "123", "Peter Ivanov");
                 CreateUser(context, "merry@gmail.com", "123", "Maria Petrova");
                 CreateUser(context, "geshu@gmail.com", "123", "George Petrov");
+                CreateUser(context, "bez_ime@gmail.com", "123", "");
 
                 CreateRole(context, "Administrators");
                 AddUserToRole(context, "admin@gmail.com", "Administrators");

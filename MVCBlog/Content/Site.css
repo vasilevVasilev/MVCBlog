@@ -20,5 +20,13 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 400px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: aqua;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: aquamarine;
 }
