@@ -1,18 +1,18 @@
 ﻿@model MVCBlog.Models.Comment
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Изтрий";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+
+
 <div>
-    <h4>Comment</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Text)
+            @Html.Label("Текст")
         </dt>
 
         <dd>
@@ -20,11 +20,22 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.Label("Дата")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.Label("Автор")
+        </dt>
+
+        <dd>
+            @if (Model.Author != null)
+            {
+                <i>@Model.Author.FullName (@Model.Author.UserName)</i>
+            }
         </dd>
 
     </dl>
@@ -33,8 +44,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Бастисай" class="btn btn-default" /> |
+            @Html.ActionLink("Към коментарите", "Index", new { p = Model.Post })
         </div>
     }
 </div>

@@ -1,23 +1,28 @@
 ﻿@model IEnumerable<MVCBlog.Models.Comment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Коментари";
 }
 
-<h2>Index</h2>
 
+<h3>Коментари</h3>
+<p></p>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @{var m = Request.QueryString["p"];}
+    @Html.ActionLink("Нов коментар", "Create", new { p = m })
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Text)
+            @Html.Label("Текст")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.Label("Дата")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Автор")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -29,11 +34,24 @@
             @Html.DisplayFor(modelItem => item.Date)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @if (item.Author != null)
+            {
+                <i>@item.Author.FullName (@item.Author.UserName)</i>
+            }
+        </td>
+        <td>
+        @if (User.IsInRole("Administrators"))
+        {
+            @Html.ActionLink("Редактирай", "Edit", new { id = item.Id, p = m }) @:|            
+            @Html.ActionLink("Изтрий", "Delete", new { id = item.Id, p = m })
+        }
         </td>
     </tr>
 }
 
 </table>
+
+<p>    
+    @Html.ActionLink("Към статията", "Details", "Posts", new { id = m }, null)
+</p>
+

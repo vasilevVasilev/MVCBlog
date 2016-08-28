@@ -18,7 +18,8 @@ namespace MVCBlog.Controllers
         public ActionResult Index(int p)
         {
             var commentsWtihAuthors = db.Comments.Include(post => post.Author).ToList();
-            var comment = commentsWtihAuthors.FindAll(post => post.Post == p);
+            var comment = commentsWtihAuthors.FindAll(post => post.Post == p)
+                .OrderByDescending(c => c.Date).ToList();
             if (comment.Count == 0)
             {                
                 return RedirectToAction("Create", new { p = p });  
@@ -56,7 +57,7 @@ namespace MVCBlog.Controllers
                 db.Posts.ToList().Find(i => i.Id == p).Comments.Add(comment);
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", new { p = p });
             }
 
             return View(comment);
@@ -84,20 +85,24 @@ namespace MVCBlog.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Text,Date")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,Text,Date")] Comment comment, int p)
         {
             if (ModelState.IsValid)
             {
+                comment.Author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
                 db.Entry(comment).State = EntityState.Modified;
+                comment.Post = p;
+                db.Posts.ToList().Find(i => i.Id == p).Comments.Add(comment);
+                db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { p = p });
             }
             return View(comment);
         }
 
         // GET: Comments/Delete/5
         [Authorize(Roles = "Administrators")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int p)
         {
             if (id == null)
             {
@@ -115,12 +120,12 @@ namespace MVCBlog.Controllers
         [Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int p)
         {
             Comment comment = db.Comments.Find(id);
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { p = p });
         }
 
         protected override void Dispose(bool disposing)

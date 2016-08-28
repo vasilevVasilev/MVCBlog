@@ -36,7 +36,8 @@
 </div>
 
 @Html.ActionLink("Коментари", "Index", new { controller = "Comments", p = Model.Id })
-
+
+
 <p>    
     @if (User.Identity.Name.Equals(Model.Author.Email) || User.IsInRole("Administrators"))
     {

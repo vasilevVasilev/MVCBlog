@@ -12,7 +12,15 @@
             @{  var db = new ApplicationDbContext();
                 string mail =  User.Identity.GetUserName();
                 string name1 = db.Users.FirstOrDefault(u => u.Email == mail).FullName;
-                string name = name1 ?? mail;
+                string name = "";
+                if (name1.Length > 0)
+                {
+                    name = name1;
+                }
+                else
+                {
+                    name = mail;
+                }                
              }
 
             @Html.ActionLink("Здравей " + name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
